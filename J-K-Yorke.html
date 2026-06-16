@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hi J-Yorke-Hinge</title>
+
+  <style>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #1f2933;
+      color: #f5f5f5;
+      overflow: hidden;
+      transition:
+        background 1s ease,
+        color 1s ease;
+    }
+
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      background: rgba(15, 23, 32, 0.9);
+      display: flex;
+      align-items: center;
+      padding: 0 24px;
+      box-sizing: border-box;
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.22);
+      z-index: 20;
+      transition:
+        background 1s ease,
+        box-shadow 1s ease;
+    }
+
+    .menu-container {
+      position: relative;
+    }
+
+    .hamburger {
+      width: 34px;
+      height: 26px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      cursor: pointer;
+    }
+
+    .hamburger span {
+      display: block;
+      height: 4px;
+      width: 100%;
+      background: #f5f5f5;
+      border-radius: 4px;
+      transition: background 1s ease;
+    }
+
+    .dropdown {
+      display: none;
+      position: absolute;
+      top: 44px;
+      left: 0;
+      width: 290px;
+      background: #ffffff;
+      color: #1f2933;
+      border-radius: 14px;
+      box-shadow: 0 14px 34px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      z-index: 25;
+      animation: dropdownFade 0.2s ease;
+      transition:
+        background 1s ease,
+        color 1s ease,
+        box-shadow 1s ease;
+    }
+
+    @keyframes dropdownFade {
+      from {
+        opacity: 0;
+        transform: translateY(-6px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .dropdown button {
+      width: 100%;
+      padding: 14px 16px;
+      border: none;
+      background: white;
+      color: #1f2933;
+      text-align: left;
+      font-size: 14px;
+      cursor: pointer;
+      border-bottom: 1px solid #e5e7eb;
+      transition:
+        background 0.25s ease,
+        color 1s ease,
+        border-color 1s ease;
+    }
+
+    .dropdown button:last-child {
+      border-bottom: none;
+    }
+
+    .dropdown button:hover {
+      background: #f1f5f9;
+    }
+
+    .show {
+      display: block;
+    }
+
+    .homepage {
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 24px;
+      box-sizing: border-box;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .text-tile {
+      max-width: 900px;
+      padding: 34px 42px;
+      border-radius: 24px;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.14);
+      box-shadow: 0 18px 45px rgba(0, 0, 0, 0.22);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      z-index: 5;
+
+      transition:
+        background 1s ease,
+        box-shadow 1s ease,
+        border 1s ease,
+        transform 0.3s ease;
+    }
+
+    .text-tile:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.25);
+    }
+
+    .main-text {
+      font-size: 42px;
+      font-weight: 700;
+      line-height: 1.3;
+      letter-spacing: 0.4px;
+      color: #f8fafc;
+      transition:
+        color 1s ease,
+        opacity 0.3s ease,
+        transform 0.3s ease;
+    }
+
+    .main-text.text-pop {
+      animation: textPop 0.45s ease;
+    }
+
+    @keyframes textPop {
+      0% {
+        transform: scale(0.96);
+        opacity: 0.5;
+      }
+      100% {
+        transform: scale(1);
+        opacity: 1;
+      }
+    }
+
+    /* Gerbera themed mode */
+    body.gerbera-theme {
+      background:
+        radial-gradient(circle at top left, rgba(255, 247, 237, 0.95), transparent 28%),
+        linear-gradient(135deg, #fff1d6 0%, #ffb86c 42%, #f9737a 100%);
+      color: #3b1f12;
+    }
+
+    body.gerbera-theme .navbar {
+      background: rgba(117, 48, 20, 0.82);
+      box-shadow: 0 4px 18px rgba(117, 48, 20, 0.25);
+    }
+
+    body.gerbera-theme .hamburger span {
+      background: #fff7ed;
+    }
+
+    body.gerbera-theme .dropdown {
+      background: #fff7ed;
+      color: #3b1f12;
+      box-shadow: 0 14px 34px rgba(117, 48, 20, 0.28);
+    }
+
+    body.gerbera-theme .dropdown button {
+      background: #fff7ed;
+      color: #3b1f12;
+      border-bottom: 1px solid #fed7aa;
+    }
+
+    body.gerbera-theme .dropdown button:hover {
+      background: #ffedd5;
+    }
+
+    body.gerbera-theme .text-tile {
+      background: rgba(255, 247, 237, 0.9);
+      border: 1px solid rgba(251, 146, 60, 0.4);
+      box-shadow: 0 20px 45px rgba(124, 45, 18, 0.22);
+    }
+
+    body.gerbera-theme .main-text {
+      color: #5c2c12;
+      text-shadow: none;
+    }
+
+    /* Flower animation */
+    .flower {
+      position: absolute;
+      font-size: 24px;
+      opacity: 0;
+      z-index: 2;
+      pointer-events: none;
+      animation: flowerFloat 3.8s ease-out forwards;
+    }
+
+    @keyframes flowerFloat {
+      0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.6) rotate(0deg);
+      }
+
+      15% {
+        opacity: 1;
+      }
+
+      70% {
+        opacity: 0.9;
+      }
+
+      100% {
+        opacity: 0;
+        transform: translateY(-180px) scale(1.15) rotate(180deg);
+      }
+    }
+
+    .flower-soft-glow {
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 214, 165, 0.55), transparent 68%);
+      opacity: 0;
+      z-index: 1;
+      pointer-events: none;
+      animation: glowPulse 2.8s ease-out forwards;
+    }
+
+    @keyframes glowPulse {
+      0% {
+        opacity: 0;
+        transform: scale(0.5);
+      }
+
+      35% {
+        opacity: 0.8;
+      }
+
+      100% {
+        opacity: 0;
+        transform: scale(1.6);
+      }
+    }
+
+    @media (max-width: 600px) {
+      .text-tile {
+        padding: 26px 24px;
+        border-radius: 20px;
+      }
+
+      .main-text {
+        font-size: 28px;
+      }
+
+      .dropdown {
+        width: 245px;
+      }
+
+      .flower {
+        font-size: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="navbar">
+    <div class="menu-container">
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div id="dropdownMenu" class="dropdown">
+        <button onclick="changeText('See, I can code. But why would you want me to do it? I anyway do that at work.', false)">
+          What else do you want me to do?
+        </button>
+
+        <button onclick="changeText('Gerbera flower?', true)">
+          Do you want it look more flower-y?
+        </button>
+
+        <button onclick="changeText('Hmm, somebody wants a lot of things.', false)">
+          We can explore anything you like.
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <div class="homepage" id="homepage">
+    <div class="text-tile">
+      <div id="mainText" class="main-text">
+        Hi J-Yorke-Hinge
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function toggleMenu() {
+      var menu = document.getElementById("dropdownMenu");
+      menu.classList.toggle("show");
+    }
+
+    function changeText(newText, isGerberaTheme) {
+      var mainText = document.getElementById("mainText");
+
+      mainText.innerText = newText;
+
+      mainText.classList.remove("text-pop");
+      void mainText.offsetWidth;
+      mainText.classList.add("text-pop");
+
+      if (isGerberaTheme) {
+        document.body.classList.add("gerbera-theme");
+        startFlowerAnimation();
+      } else {
+        document.body.classList.remove("gerbera-theme");
+      }
+
+      document.getElementById("dropdownMenu").classList.remove("show");
+
+      window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+      });
+    }
+
+    function startFlowerAnimation() {
+      var homepage = document.getElementById("homepage");
+
+      var flowerSymbols = ["🌼", "🌸", "✿", "❀", "🌺"];
+
+      var glow = document.createElement("div");
+      glow.className = "flower-soft-glow";
+      glow.style.left = "50%";
+      glow.style.top = "50%";
+      glow.style.transform = "translate(-50%, -50%)";
+      homepage.appendChild(glow);
+
+      setTimeout(function() {
+        glow.remove();
+      }, 3000);
+
+      for (var i = 0; i < 18; i++) {
+        createFlower(homepage, flowerSymbols, i);
+      }
+    }
+
+    function createFlower(homepage, flowerSymbols, index) {
+      setTimeout(function() {
+        var flower = document.createElement("div");
+        flower.className = "flower";
+
+        flower.innerText = flowerSymbols[Math.floor(Math.random() * flowerSymbols.length)];
+
+        var leftPosition = 15 + Math.random() * 70;
+        var topPosition = 55 + Math.random() * 30;
+        var size = 18 + Math.random() * 18;
+        var duration = 3 + Math.random() * 1.5;
+
+        flower.style.left = leftPosition + "%";
+        flower.style.top = topPosition + "%";
+        flower.style.fontSize = size + "px";
+        flower.style.animationDuration = duration + "s";
+
+        homepage.appendChild(flower);
+
+        setTimeout(function() {
+          flower.remove();
+        }, duration * 1000);
+      }, index * 90);
+    }
+
+    window.onclick = function(event) {
+      if (!event.target.closest(".menu-container")) {
+        document.getElementById("dropdownMenu").classList.remove("show");
+      }
+    };
+  </script>
+
+</body>
+</html>
